@@ -39,25 +39,130 @@ $stmt->close();
 	</table>
 </div>
 
+
 <div>
-	<form method="post" action="addGallery.php"> 
+	<table>
+		<tr>
+			<td>Sections</td>
+		</tr>
+		<tr>
+			<td>Gallery Name</td>
+			<td>Section Name</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
 
-		<fieldset>
-			<legend>Name</legend>
-		</fieldset>
-
-		<p><input type="submit" /></p>
-	</form>
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galName, $sectionName)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n" . $sectionName . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+	</table>
 </div>
-
-
-
 
 
 <div>
 	<table>
 		<tr>
+			<td>Artwork</td>
+		</tr>
+		<tr>
+			<td>Gallery</td>
+			<td>Artwork Name</td>
+			<td>Artist</td>
+			<td>Price</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galName,$artName, $artistName, $price)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n". $artName . "\n</td>\n<td>\n". $artistName . "\n</td>\n<td>\n" . $price . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+	</table>
+</div>
+
+<div>
+	<table>
+		<tr>
+			<td>Artwork</td>
+		</tr>
+		<tr>
+			<td>Gallery</td>
+			<td>Artwork Name</td>
+			<td>Artist</td>
+			<td>Price</td>
+			<td>Availability</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galName,$artName, $artistName, $price)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n". $artName . "\n</td>\n<td>\n". $artistName . "\n</td>\n<td>\n" . $price . "\n</td>\n<td>\n" . $isSold . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+	</table>
+</div>
+
+<div>
+	<table>
+		<tr>
 			<td>Customers</td>
+		</tr>
+		<tr>
+			<td>First Name</td>
+			<td>Last Name</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custFName, $custLName)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $custFName . "\n</td>\n<td>\n" . $custLName . "\n</td>\n</tr>";
+}
+
+$stmt->close();
+?>
+	</table>
+</div>
+
+<div>
+	<table>
+		<tr>
+			<td>Artists</td>
 		</tr>
 		<tr>
 			<td>First Name</td>
@@ -82,6 +187,21 @@ $stmt->close();
 ?>
 	</table>
 </div>
+
+
+
+<div>
+	<form method="post" action="addGallery.php"> 
+
+		<fieldset>
+			<legend>Name</legend>
+		</fieldset>
+
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+
 
 
 
