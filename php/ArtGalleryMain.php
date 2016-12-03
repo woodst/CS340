@@ -287,6 +287,7 @@ $stmt->close();
 ?>
 				</select>
 		</fieldset>
+		<p><input type="submit" /></p>
 	</form>
 </div>
 
@@ -313,6 +314,7 @@ $stmt->close();
 ?>
 				</select>
 		</fieldset>
+		<p><input type="submit" /></p>
 	</form>
 </div>
 
@@ -339,6 +341,7 @@ $stmt->close();
 ?>
 				</select>
 		</fieldset>
+		<p><input type="submit" /></p>
 	</form>
 </div>
 
