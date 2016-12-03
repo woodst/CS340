@@ -71,7 +71,7 @@ if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
 if(!$stmt->execute()){
 	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
-if(!$stmt->bind_result($firstName, $lastName, $purchaseListNum)){
+if(!$stmt->bind_result($firstName, $lastName)){
 	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
@@ -98,7 +98,7 @@ if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
-if(!$stmt->bind_result($id, $pname)){
+if(!$stmt->bind_result($custID, $firstName, $lastName)){
 	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
@@ -112,9 +112,9 @@ $stmt->close();
 </div>
 
 <div>
-	<form method="post" action="visitedFloors.php"> 
+	<form method="post" action="visitedSects.php"> 
 		<fieldset>
-			<legend>Display Floors Visited By Customer</legend>
+			<legend>Display Sections Visited By Customer</legend>
 				<select>
 <?php
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
@@ -124,7 +124,7 @@ if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
-if(!$stmt->bind_result($id, $pname)){
+if(!$stmt->bind_result($custID, $firstName, $lastName)){
 	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
@@ -140,21 +140,21 @@ $stmt->close();
 <div>
 	<form method="post" action="visitedCustomers.php"> 
 		<fieldset>
-			<legend>Display Customer Sign In List By Floor</legend>
+			<legend>Display Customer Sign In List By Section</legend>
 				<select>
 <?php
-if(!($stmt = $mysqli->prepare("SELECT floorID, floorName FROM Floor"))){
+if(!($stmt = $mysqli->prepare("SELECT galName, sectionName FROM Section" <!-- INSERT JOIN WITH GALLERY HERE!!!! -->))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
 
 if(!$stmt->execute()){
 	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
-if(!$stmt->bind_result($id, $pname)){
+if(!$stmt->bind_result($galName, $sectionName)){
 	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
-	echo '<option value=" '. $floorID . ' "> ' . $floorName . '</option>\n';
+	echo '<option value=" '. $galName . ' "> ' . $sectionName . '</option>\n';
 }
 $stmt->close();
 ?>
