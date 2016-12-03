@@ -99,36 +99,6 @@ $stmt->close();
 	</table>
 </div>
 
-<div>
-	<table>
-		<tr>
-			<td>Artwork</td>
-		</tr>
-		<tr>
-			<td>Gallery</td>
-			<td>Artwork Name</td>
-			<td>Artist</td>
-			<td>Price</td>
-			<td>Availability</td>
-		</tr>
-<?php
-if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
-	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
-}
-
-if(!$stmt->execute()){
-	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
-}
-if(!$stmt->bind_result($galName,$artName, $artistName, $price)){
-	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
-}
-while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n". $artName . "\n</td>\n<td>\n". $artistName . "\n</td>\n<td>\n" . $price . "\n</td>\n<td>\n" . $isSold . "\n</td>\n</tr>";
-}
-$stmt->close();
-?>
-	</table>
-</div>
 
 <div>
 	<table>
