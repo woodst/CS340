@@ -164,14 +164,103 @@ $stmt->close();
 	<form method="post" action="addGallery.php"> 
 
 		<fieldset>
-			<legend>Name</legend>
+			<legend>Add Gallery</legend>
+			<p>Gallery Name: <input type="text" name="galName" /></p>
 		</fieldset>
-
 		<p><input type="submit" /></p>
 	</form>
 </div>
 
+<div>
+	<form method="post" action="addArtist.php"> 
 
+		<fieldset>
+			<legend>Add Artist</legend>
+			<p>First Name: <input type="text" name="firstName" /></p>
+			<p>Last Name: <input type="text" name="lastName" /></p>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+<div>
+	<form method="post" action="addCustomer.php"> 
+
+		<fieldset>
+			<legend>Add Customer</legend>
+			<p>First Name: <input type="text" name="custFName" /></p>
+			<p>Last Name: <input type="text" name="custLName" /></p>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+<div>
+	<form method="post" action="addArt.php"> 
+		<legend>Add Artwork</legend>
+		<fieldset>
+			<legend>Artwork Info </legend>
+			<p>Art Name: <input type="text" name="artName" /></p>
+			<p>Price: $<input type="number" name="price" /></p>
+		</fieldset>
+
+		<fieldset>
+			<legend>Painted By</legend>
+			<select name="Artist">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT galID, galName FROM Gallery"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($artistID, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $artistID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+<div>
+	<form method="post" action="addSect.php"> 
+		<legend>Add Section</legend>
+		<fieldset>
+			<legend>Section </legend>
+			<p>Section Name: <input type="text" name="sectName" /></p>
+		</fieldset>
+
+		<fieldset>
+			<legend>Gallery</legend>
+			<select name="Gallery">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT galID, galName FROM Gallery"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galID, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $galID . ' "> ' . $galName . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
 
 
 
