@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 'On');
-$mysqli = new mysqli("oniddb.cws.oregonstate.edu", <!--- INSERT OTHER PARTS HERE!!! -->);
+$mysqli = new mysqli("oniddb.cws.oregonstate.edu","woodsth-db","jDJ3RibroohRXZkT","woodsth-db");
 if($mysqli->connect_errno){
 	echo "Connection Error no. " . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 	}
@@ -10,18 +10,23 @@ if($mysqli->connect_errno){
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
+<head>
+<style type="text/css">
+th.borderme  { border: thick solid black; }
+td.borderme  { border: thin solid black; }
+</style>
+</head>
 <body>
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Galleries</td>
 		</tr>
 		<tr>
-			<td>Name</td>
-			<td>Total Sales</td>
+			<th>Name</th>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+if(!($stmt = $mysqli->prepare("SELECT galleryName FROM gallery"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -32,7 +37,7 @@ if(!$stmt->bind_result($name, $totalSales)){
 	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $name . "\n</td>\n<td>\n" . $totalSales . "\n</td>\n</tr>";
+ echo "<tr>\n<td>\n" . $name . "\n</td>\n</tr>";
 }
 $stmt->close();
 ?>
@@ -41,7 +46,7 @@ $stmt->close();
 
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Sections</td>
 		</tr>
@@ -72,7 +77,7 @@ $stmt->close();
 
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Artwork</td>
 		</tr>
@@ -83,7 +88,7 @@ $stmt->close();
 			<td>Price</td>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+if(!($stmt = $mysqli->prepare(SELECT artworkTitle, artworkYearCreated, artworkSectionID, artworkArtistID, artworkPrice FROM artwork INNER JOIN artworkSectionID = ))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -103,7 +108,7 @@ $stmt->close();
 
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Customers</td>
 		</tr>
@@ -132,7 +137,7 @@ $stmt->close();
 </div>
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Artists</td>
 		</tr>
@@ -161,7 +166,7 @@ $stmt->close();
 </div>
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Sales</td>
 		</tr>
@@ -177,9 +182,9 @@ $stmt->close();
 			<td>Price</td>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare(SELECT c.customerFirstName, c.customerLastName, g.galleryName, se.sectionName, a.artworkTitle, ar.artistFirstName, ar.artistLastName, sa.saleDescription, sa.amount
+if(!($stmt = $mysqli->prepare("SELECT c.customerFirstName, c.customerLastName, g.galleryName, se.sectionName, a.artworkTitle, ar.artistFirstName, ar.artistLastName, sa.saleDescription, sa.amount
 FROM CS340.customer c JOIN CS340.sales sa on c.customerID = sa.customerID JOIN CS340.artwork a on sa.artworkID = a.artworkID JOIN CS340.section se on sa.sectionID = se.sectionID JOIN CS340.gallery g on se.galleryID = g.galleryID JOIN CS340.artist ar on a.artworkArtistID = ar.artistID 
-ORDER BY a.artworkTitle))){
+ORDER BY a.artworkTitle"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -199,7 +204,7 @@ $stmt->close();
 </div>
 
 <div>
-	<table>
+	<table border=1>
 		<tr>
 			<td>Customer Count</td>
 		</tr>
@@ -275,7 +280,7 @@ $stmt->close();
 			<legend>Gallery</legend>
 			<select name="Gallery">
 <?php
-if(!($stmt = $mysqli->prepare("SELECT galleryID, galName FROM gallery" <!-- INSERT REST OF QUERY HERE!! -->))){
+if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName FROM gallery"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
 
@@ -446,7 +451,7 @@ $stmt->close();
 	<form method="post" action="displayPurchaseList.php"> 
 		<fieldset>
 			<legend>Display List Of Purchases for Customer</legend>
-				<select>
+				<select name=purchList>
 <?php
 /*
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
@@ -477,7 +482,7 @@ $stmt->close();
 	<form method="post" action="visitedSects.php"> 
 		<fieldset>
 			<legend>Display Sections Visited By Customer</legend>
-				<select>
+				<select name=visitedSections>
 <?php
 
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
