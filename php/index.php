@@ -180,8 +180,9 @@ $stmt->close();
 			<th>Price</th>
 		</tr>
 <?php
-/*
-if(!($stmt = $mysqli->prepare("SELECT c.customerFirstName, c.customerLastName, g.galleryName, se.sectionName, a.artworkTitle, ar.artistFirstName, ar.artistLastName, sa.saleDescription, sa.amount FROM customer AS c JOIN sales AS sa on c.customerID=sa.customerID JOIN artwork AS a on sa.artworkID=a.artworkID JOIN section AS se on sa.sectionID=se.sectionID JOIN gallery AS g on se.galleryID=g.galleryID JOIN artist AS ar on a.artworkArtistID=ar.artistID ORDER BY a.artworkTitle"))){
+if(!($stmt = $mysqli->prepare("SELECT c.customerFirstName, c.customerLastName, g.galleryName, se.sectionName, a.artworkTitle, ar.artistFirstName, ar.artistLastName, sa.saleDescription, a.artworkPrice
+FROM customer c JOIN sales sa on c.customerID = sa.customerID JOIN artwork a on sa.artworkID = a.artworkID JOIN section se on a.artWorkSectionID = se.sectionID JOIN gallery g on se.galleryID = g.galleryID JOIN artist ar on a.artworkArtistID = ar.artistID 
+ORDER BY c.CustomerLastName"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -196,7 +197,7 @@ while($stmt->fetch()){
 }
 
 $stmt->close();
-*/
+
 ?>
 	</table>
 </div>
@@ -210,14 +211,10 @@ $stmt->close();
 			<td>Number of Customers</td>
 		</tr>
 <?php
-/*
-if(!($stmt = $mysqli->prepare("select
-galleryName as 'gallery name',
-count(distinct(c.customerID)) as 'customer count'
 
-from gallery g
-join sales s on g.galleryID = s.galleryID
-join customer c on s.customerID = c.customerID"))){
+if(!($stmt = $mysqli->prepare("SELECT g.galleryName, count(c.customerID) from gallery g 
+JOIN section s ON s.galleryID = g.galleryID JOIN artwork a ON s.sectionID = a.artworkSectionID JOIN sales sa ON a.artworkID = sa.artworkID JOIN customer c ON sa.customerID = c.customerID
+GROUP BY g.galleryName ORDER BY galleryName"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -232,7 +229,7 @@ while($stmt->fetch()){
 }
 
 $stmt->close();
-*/
+
 ?>
 	</table>
 </div>
@@ -249,6 +246,21 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<br>
+<div>
+	<form method="post" action="addArtist.php"> 
+
+		<fieldset>
+			<legend>Add Artist</legend>
+			<p>First Name: <input type="text" name="firstName" /></p>
+			<p>Last Name: <input type="text" name="lastName" /></p>
+			<p>Movement: <input type="text" name="movement" /></p>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+
 
 
 
