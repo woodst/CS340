@@ -107,3 +107,49 @@ values
 (24,"The Roman Daughter",1811,9,4,52900),
 (25,"William Henry Harrison ",1814,9,4,76000);
 
+
+insert into customer
+values
+(1,"Bill", "Gates"),
+(2,"Mark", "Zuckerberg"),
+(3,"Larry", "Ellison"),
+(4,"Tim", "Cook"),
+(5,"Larry", "Page"),
+(6,"Sergy", "Brin");
+
+insert into visitorLog
+values
+(1,1,1),
+(2,1,2),
+(3,1,3),
+(4,1,5),
+(5,1,7),
+(6,2,1),
+(7,2,6),
+(8,2,8),
+(9,2,9),
+(10,2,3),
+(11,3,1),
+(12,3,3),
+(13,3,5),
+(14,3,6),
+(15,3,7),
+(16,4,1),
+(17,4,2),
+(18,4,3),
+(19,4,5),
+(20,4,7);
+
+insert into sales
+values
+(1,"This is a sale",1,1),
+(2,"This is a sale",2,2),
+(3,"This is a sale",3,3),
+(4,"This is a sale",4,4),
+(5,"This is a sale",5,1),
+(6,"This is a sale",6,2),
+(7,"This is a sale",7,3),
+(8,"This is a sale",8,4),
+(9,"This is a sale",9,1);
+
+

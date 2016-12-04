@@ -97,23 +97,18 @@ create table customer
 -- sales
 -- Sales are made in individual transactions to customers by a gallery 
 -- for a specific peice of Art
+-- tmw: removed section,  transactionType, amount per simplification discussion
 drop table if exists sales;
 create table sales
 (
 	transactionID		int not null auto_increment primary key,
     saleDescription		varchar(250),
-    transactionType		varchar(50),
     artworkID			int,
     customerID			int,
-    sectionID			int,
-    Amount				decimal(10,2),
 	Foreign key fk_sale_artwork (artworkID) references artwork(artworkID)
     on delete cascade
     on update cascade,
 	Foreign key fk_sale_customer (customerID) references customer(customerID)
-    on delete cascade
-    on update cascade,
-	Foreign key fk_sale_section (sectionID) references section(sectionID)
     on delete cascade
     on update cascade
 ) engine = innodb;
@@ -125,7 +120,7 @@ create table visitorLog
 (
 	logID				int not null auto_increment primary key,
 	customerID			int,
-    sectionID				int,
+    sectionID			int,
     foreign key fk_visitor_customer (customerID) references customer(customerID)
     on delete cascade
     on update cascade,
@@ -134,5 +129,7 @@ create table visitorLog
     on update cascade
 ) engine = innodb;
 
+
+	
 -- restore the foreign key checks
 set FOREIGN_KEY_CHECKS = 1;
