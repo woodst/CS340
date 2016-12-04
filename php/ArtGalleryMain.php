@@ -262,6 +262,108 @@ $stmt->close();
 	</form>
 </div>
 
+<div>
+	<form method="post" action="visitSection.php"> 
+	<legend>Visit a Section</legend>
+
+		<fieldset>
+			<legend>Customer</legend>
+			<select name="Customers">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT custID, custFName, custLName FROM Customers"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $custFName, $custLName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $custFName . ' ' . $custLName '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+				<fieldset>
+			<legend>Section</legend>
+			<select name="Sections">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT sectID, sectName, galName FROM Section" <!-- INSERT REST OF QUERY HERE!! -->))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($sectID, $sectName, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $sectID . ' "> ' . $galName . ', ' . $sectName '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+<div>
+	<form method="post" action="purchaseArt.php"> 
+	<legend>Purchase Artwork</legend>
+
+		<fieldset>
+			<legend>Customer</legend>
+			<select name="Customers">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT custID, custFName, custLName FROM Customers"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $custFName, $custLName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $custFName . ' ' . $custLName '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+				<fieldset>
+			<legend>Artwork</legend>
+			<select name="Sections">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT artID, artName, price, isSold FROM Artwork" <!-- INSERT REST OF QUERY HERE!! -->))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($artID, $artName, $price, $isSold)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $artID . ' "> $' . $price . ', ' . $artname . ' ';
+	$available = $isSold ? 'Available' : 'Sold';
+	echo	$available . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
 
 
 <div>
