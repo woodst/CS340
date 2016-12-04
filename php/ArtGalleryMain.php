@@ -50,7 +50,8 @@ $stmt->close();
 			<td>Section Name</td>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare(<!--INSERT QUERY HERE!!!!!! -->))){
+/*
+if(!($stmt = $mysqli->prepare("SELECT galleryName, sectionName FROM Section"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -64,6 +65,7 @@ while($stmt->fetch()){
  echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n" . $sectionName . "\n</td>\n</tr>";
 }
 $stmt->close();
+*/
 ?>
 	</table>
 </div>
@@ -263,6 +265,39 @@ $stmt->close();
 </div>
 
 <div>
+	<form method="post" action="addSect.php"> 
+
+		<fieldset>
+			<legend>Add Section</legend>
+			<p>Section Name: <input type="text" name="sectName" /></p>
+		</fieldset>
+						<fieldset>
+			<legend>Gallery</legend>
+			<select name="Gallery">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT galleryID, galName FROM gallery" <!-- INSERT REST OF QUERY HERE!! -->))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galleryID, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $galleryID . ' "> ' . $galName . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+
+<!-- NEEDS QUERY!!!
+<div>
 	<form method="post" action="addArt.php"> 
 		<legend>Add Artwork</legend>
 		<fieldset>
@@ -275,6 +310,7 @@ $stmt->close();
 			<legend>Painted By</legend>
 			<select name="Artist">
 <?php
+/*
 if(!($stmt = $mysqli->prepare("SELECT galID, galName FROM Gallery"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -289,46 +325,15 @@ while($stmt->fetch()){
 	echo '<option value=" '. $artistID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
 }
 $stmt->close();
+*/
 ?>
 			</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
 </div>
-
 <div>
-	<form method="post" action="addSect.php"> 
-		<legend>Add Section</legend>
-		<fieldset>
-			<legend>Section </legend>
-			<p>Section Name: <input type="text" name="sectName" /></p>
-		</fieldset>
-
-		<fieldset>
-			<legend>Gallery</legend>
-			<select name="Gallery">
-<?php
-if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName from gallery order by galleryName"))){
-	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-}
-
-if(!$stmt->execute()){
-	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-if(!$stmt->bind_result($galID, $galName)){
-	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-while($stmt->fetch()){
-	echo '<option value=" '. $galID . ' "> ' . $galName . '</option>\n';
-}
-$stmt->close();
-?>
-			</select>
-		</fieldset>
-		<p><input type="submit" /></p>
-	</form>
-</div>
-
+-->
 <div>
 	<form method="post" action="visitSection.php"> 
 	<legend>Visit a Section</legend>
@@ -379,6 +384,8 @@ $stmt->close();
 	</form>
 </div>
 
+<!-- ARTWORK SECTION NEEDS QUERY-->
+<!--
 <div>
 	<form method="post" action="purchaseArt.php"> 
 	<legend>Purchase Artwork</legend>
@@ -387,6 +394,7 @@ $stmt->close();
 			<legend>Customer</legend>
 			<select name="Customers">
 <?php
+/*
 if(!($stmt = $mysqli->prepare("SELECT custID, custFName, custLName FROM Customers"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -424,21 +432,23 @@ while($stmt->fetch()){
 	echo	$available . '</option>\n';
 }
 $stmt->close();
+*/
 ?>
 			</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
 </div>
+-->
 
-
-
+<!--
 <div>
 	<form method="post" action="displayPurchaseList.php"> 
 		<fieldset>
 			<legend>Display List Of Purchases for Customer</legend>
 				<select>
 <?php
+/*
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -453,12 +463,15 @@ while($stmt->fetch()){
 	echo '<option value=" '. $custID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
 }
 $stmt->close();
+*/
 ?>
 				</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
 </div>
+-->
+
 
 <div>
 	<form method="post" action="visitedSects.php"> 
@@ -466,6 +479,7 @@ $stmt->close();
 			<legend>Display Sections Visited By Customer</legend>
 				<select>
 <?php
+
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -480,40 +494,13 @@ while($stmt->fetch()){
 	echo '<option value=" '. $custID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
 }
 $stmt->close();
+
 ?>
 				</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
 </div>
-
-<div>
-	<form method="post" action="visitedCustomers.php"> 
-		<fieldset>
-			<legend>Display Customer Sign In List By Section</legend>
-				<select>
-<?php
-if(!($stmt = $mysqli->prepare("SELECT galName, sectionName FROM Section" <!-- INSERT JOIN WITH GALLERY HERE!!!! -->))){
-	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
-}
-
-if(!$stmt->execute()){
-	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-if(!$stmt->bind_result($galName, $sectionName)){
-	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
-}
-while($stmt->fetch()){
-	echo '<option value=" '. $galName . ' "> ' . $sectionName . '</option>\n';
-}
-$stmt->close();
-?>
-				</select>
-		</fieldset>
-		<p><input type="submit" /></p>
-	</form>
-</div>
-
 
 <div>
 	<form method="post" action="filterLName.php">
