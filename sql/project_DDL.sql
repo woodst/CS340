@@ -21,12 +21,14 @@ create table gallery
 (
 	galleryID 			int not null auto_increment primary key,
     galleryName 		varchar(200),
-    galleryCity			varchar(40)
+    galleryCity			varchar(200)
 
 ) engine = innodb;
 
 -- floor
 -- One or more floors belong to a gallery
+-- Removed to simplify the work - tmw
+/*
 drop table if exists floor;
 create table floor
 (
@@ -37,6 +39,7 @@ create table floor
     on delete cascade
     on update cascade
 ) engine = innodb;
+*/
 
 -- section
 -- One or more sections belong to a Gallery Floor
@@ -45,27 +48,28 @@ create table section
 (
 	sectionID 			int not null auto_increment primary key,
     sectionName 		varchar(50),
-    floorID				int,
-    Foreign key fk_section_floor (floorID) references floor(floorID)
+    galleryID			int not null,
+    Foreign key fk_section_gallery (galleryID) references section(sectionID)
     on delete cascade
     on update cascade
 ) engine = innodb;
 
+
 -- art
 -- each art is made by one artist
-drop table if exists art;
-create table art
+drop table if exists artwork;
+create table artwork
 (
-	artID 				int not null auto_increment primary key,
-    artTitle			varchar(50),
-    artYearCreated		int,
-    sectionID			int,
-    artistID			int,
-    artType				varchar(50),
-	Foreign key fk_art_section (sectionID) references section(sectionID)
+	artworkID 				int not null auto_increment primary key, 
+    artworkTitle			varchar(50),
+    artworkYearCreated		int,
+    artworkSectionID		int,
+	artworkArtistID			int, 
+    artworkPrice			int,
+	Foreign key fk_artwork_section (artworkSectionID) references section(sectionID)
     on delete cascade
     on update cascade,
-	Foreign key fk_art_artist (artistID) references artist(artistID)
+	Foreign key fk_artwork_artist (artworkArtistID) references artist(artistID)
     on delete cascade
     on update cascade
     
@@ -78,8 +82,7 @@ create table artist
 	artistID			int not null auto_increment primary key,
     artistFirstName		varchar(50),
     artistLastName		varchar(50),
-    artistMovement		varchar(50),
-    artistNationality	varchar(50)
+    artistMovement		varchar(50)
 ) engine = innodb;
 
 -- customer
@@ -99,17 +102,34 @@ create table sales
 (
 	transactionID		int not null auto_increment primary key,
     saleDescription		varchar(250),
-    artID				int,
+    transactionType		varchar(50),
+    artworkID			int,
     customerID			int,
-    galleryID			int,
-    saleAmount			decimal(10,2),
-	Foreign key fk_sale_art (artID) references art(artID)
+    sectionID			int,
+    Amount				decimal(10,2),
+	Foreign key fk_sale_artwork (artworkID) references artwork(artworkID)
     on delete cascade
     on update cascade,
 	Foreign key fk_sale_customer (customerID) references customer(customerID)
     on delete cascade
     on update cascade,
-	Foreign key fk_sale_gallery (galleryID) references gallery(galleryID)
+	Foreign key fk_sale_section (sectionID) references section(sectionID)
+    on delete cascade
+    on update cascade
+) engine = innodb;
+
+-- visitorLog
+-- table to track which customers have visited which museum
+drop table if exists visitorLog;
+create table visitorLog
+(
+	logID				int not null auto_increment primary key,
+	customerID			int,
+    sectionID				int,
+    foreign key fk_visitor_customer (customerID) references customer(customerID)
+    on delete cascade
+    on update cascade,
+    foreign key fk_visitor_section (sectionID) references section(sectionID)
     on delete cascade
     on update cascade
 ) engine = innodb;
