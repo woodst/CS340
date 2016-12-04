@@ -259,10 +259,215 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<br>
+<div>
+	<form method="post" action="addCustomer.php"> 
 
+		<fieldset>
+			<legend>Add Customer</legend>
+			<p>First Name: <input type="text" name="custFName" /></p>
+			<p>Last Name: <input type="text" name="custLName" /></p>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<br>
+<div>
+	<form method="post" action="addSect.php"> 
 
+		<fieldset>
+			<legend>Add Section</legend>
+			<p>Section Name: <input type="text" name="sectName" /></p>
+		</fieldset>
+						<fieldset>
+			<legend>Gallery</legend>
+			<select name="Gallery">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName FROM gallery"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
 
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galleryID, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $galleryID . ' "> ' . $galName . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<br>
+<div>
+	<form method="post" action="addArt.php"> 
+		<legend>Add Artwork</legend>
+		<fieldset>
+			<legend>Artwork Info </legend>
+			<p>Art Name: <input type="text" name="artName" /></p>
+			<p>Year CreateD:<input type="number" name="yearCreated" /></p>
+			<p>Price: $<input type="number" name="price" /></p>
+		</fieldset>
+		<fieldset>
+		<legend>Section</legend>
+			<select name="addSection">
+			<?php
 
+if(!($stmt = $mysqli->prepare("SELECT sectionID, sectionName, galleryName FROM section JOIN gallery on section.galleryID = gallery.galleryID"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($sectID, $sectName, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $sectID . ' "> Gallery:' . $galName . ' Section:' . $sectName . '</option>\n';
+}
+$stmt->close();
+
+?>
+			</select>
+		</fieldset>
+		<fieldset>
+			<legend>Painted By</legend>
+			<select name="Artist">
+<?php
+
+if(!($stmt = $mysqli->prepare("SELECT artistID, artistFirstName, artistLastName FROM artist"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($artistID, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $artistID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
+}
+$stmt->close();
+
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<br><br><br>
+<div>
+	<form method="post" action="visitSection.php"> 
+	<legend>Visit a Section</legend>
+
+		<fieldset>
+			<legend>Customer</legend>
+			<select name="Customers">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $custFName, $custLName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $custFName . ' ' . $custLName . '</option>\n';
+}
+$stmt->close();
+
+?>
+			</select>
+		</fieldset>
+				<fieldset>
+			<legend>Section</legend>
+			<select name="Sections">
+<?php
+
+if(!($stmt = $mysqli->prepare("SELECT sectionID, sectionName, galleryName FROM section JOIN gallery on section.galleryID = gallery.galleryID"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($sectID, $sectName, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $sectID . ' "> Gallery:' . $galName . ' Section:' . $sectName . '</option>\n';
+}
+$stmt->close();
+
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<br>
+<div>
+	<form method="post" action="purchaseArt.php"> 
+	<legend>Purchase Artwork</legend>
+
+		<fieldset>
+			<legend>Customer</legend>
+			<select name="Customers">
+<?php
+
+if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $custFName, $custLName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $custFName . ' ' . $custLName . '</option>\n';
+}
+$stmt->close();
+?>
+			</select>
+		</fieldset>
+				<fieldset>
+			<legend>Artwork</legend>
+			<select name="Sections">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT artworkID, artworkTitle, artworkPrice, isSold FROM artwork"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($artID, $artName, $price, $isSold)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	$available = $isSold ? 'Available' : 'Sold';
+	echo '<option value=" '. $artID . ' "> $' . $price . ', ' . $artname . ' ' .$available . '</option>\n';
+}
+$stmt->close();
+
+?>
+			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
 
 </body>
 </html>
