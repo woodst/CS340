@@ -7,10 +7,10 @@ if(!$mysqli || $msqli->connect_errno){
 	echo "Connection error number" . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 	}
 	
-if(!($stmt = $mysqli->prepare("INSERT INTO gallery (galleryName, galleryCity) VALUES (?,?)")){
+if(!($stmt = $mysqli->prepare("INSERT INTO customer (customerFirstName, customerLastName) VALUES (?,?)")){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
-if(!($stmt->bind_param("ssii",$_POST['galName'],$_POST['galCity']))){
+if(!($stmt->bind_param("ssii",$_POST['custFName'],$_POST['custLName']))){
 	echo "Bind failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 if(!$stmt->execute()){

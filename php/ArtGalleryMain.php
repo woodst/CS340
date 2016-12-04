@@ -158,7 +158,72 @@ $stmt->close();
 	</table>
 </div>
 
+<div>
+	<table>
+		<tr>
+			<td>Sales</td>
+		</tr>
+		<tr>
+			<td>Customer First Name</td>
+			<td>Customer Last Name</td>
+			<td>Gallery</td>
+			<td>Section</td>
+			<td>Title of Artwork</td>
+			<td>Artist First Name</td>
+			<td>Artist Last Name</td>
+			<td>Description of Sale</td>
+			<td>Price</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare(SELECT c.customerFirstName, c.customerLastName, g.galleryName, se.sectionName, a.artworkTitle, ar.artistFirstName, ar.artistLastName, sa.saleDescription, sa.amount
+FROM CS340.customer c JOIN CS340.sales sa on c.customerID = sa.customerID JOIN CS340.artwork a on sa.artworkID = a.artworkID JOIN CS340.section se on sa.sectionID = se.sectionID JOIN CS340.gallery g on se.galleryID = g.galleryID JOIN CS340.artist ar on a.artworkArtistID = ar.artistID 
+ORDER BY a.artworkTitle))){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
 
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($customerFirstName, $customerLastName, $galleryName, $sectionName, $artworkTitle, $artistFirstName, $artistLastName, $saleDescription, $amount)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $customerFirstName . "\n</td>\n<td>\n" . $customerLastName . "\n</td>\n<td>\n" . $galleryName . "\n</td>\n<td>\n" . $sectionName . "\n</td>\n<td>\n" . $artworkTitle . "\n</td>\n<td>\n" . $artistFirstName . "\n</td>\n<td>\n" . $artistLastName . "\n</td>\n<td>\n" . $saleDescription . "\n</td>\n<td>\n$" . $amount . "\n</td>\n</tr>";
+}
+
+$stmt->close();
+?>
+	</table>
+</div>
+
+<div>
+	<table>
+		<tr>
+			<td>Customer Count</td>
+		</tr>
+		<tr>
+			<td>Gallery</td>
+			<td>Number of Customers</td>
+		</tr>
+<?php
+if(!($stmt = $mysqli->prepare("select galleryName as 'gallery name', count(distinct(c.customerID)) as 'customer count'")){
+	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galName, $count)){
+	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $galName . "\n</td>\n<td>\n" . $count . "\n</td>\n</tr>";
+}
+
+$stmt->close();
+?>
+	</table>
+</div>
 
 <div>
 	<form method="post" action="addGallery.php"> 
@@ -166,6 +231,7 @@ $stmt->close();
 		<fieldset>
 			<legend>Add Gallery</legend>
 			<p>Gallery Name: <input type="text" name="galName" /></p>
+			<p>City: <input type="text" name="galCity" /></p>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
@@ -178,6 +244,7 @@ $stmt->close();
 			<legend>Add Artist</legend>
 			<p>First Name: <input type="text" name="firstName" /></p>
 			<p>Last Name: <input type="text" name="lastName" /></p>
+			<p>Movement: <input type="text" name="movement" /></p>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
@@ -241,7 +308,7 @@ $stmt->close();
 			<legend>Gallery</legend>
 			<select name="Gallery">
 <?php
-if(!($stmt = $mysqli->prepare("SELECT galID, galName FROM Gallery"))){
+if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName from gallery order by galleryName"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
 
@@ -369,7 +436,7 @@ $stmt->close();
 <div>
 	<form method="post" action="displayPurchaseList.php"> 
 		<fieldset>
-			<legend>Display List Of Purchases</legend>
+			<legend>Display List Of Purchases for Customer</legend>
 				<select>
 <?php
 if(!($stmt = $mysqli->prepare("SELECT custID, firstName, lastName FROM Customers"))){
