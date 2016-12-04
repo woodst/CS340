@@ -22,20 +22,21 @@ td.borderme  { border: thin solid black; }
 	<table border=1>
 		<tr>
 			<th>Name</th>
+			<th>City</th>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare("SELECT galleryName FROM gallery"))){
+if(!($stmt = $mysqli->prepare("SELECT galleryName, galleryCity FROM gallery"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
 if(!$stmt->execute()){
 	echo "Execute failed. Error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
-if(!$stmt->bind_result($name)){
+if(!$stmt->bind_result($name, $city)){
 	echo "Bind failed.  Error no."  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $name . "\n</td>\n</tr>";
+ echo "<tr>\n<td>\n" . $name . "\n</td>\n<td>\n" . $city . "\n</td>\n</tr>";
 }
 $stmt->close();
 ?>
