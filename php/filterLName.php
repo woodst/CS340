@@ -1,30 +1,36 @@
 <?php
-//Turn on error reporting
 ini_set('display_errors', 'On');
-//Connects to the database
-$mysqli = new mysqli("oniddb.cws.oregonstate.edu", <!-- INSERT REST OF STUFF HERE!!! -->);
+$mysqli = new mysqli("oniddb.cws.oregonstate.edu","woodsth-db","jDJ3RibroohRXZkT","woodsth-db");
+if($mysqli->connect_errno){
+	echo "Connection Error no. " . $mysqli->connect_errno . ", " . $mysqli->connect_error;
+	}
 
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
+<header>
+<style type="text/css">
+th.borderme  { border: thick solid black; }
+td.borderme  { border: thin solid black; }
+</style>
+</header>
 <body>
 <div>
-	<table>
+	<h1>Customers</h1>
+	<table border=1>
+
 		<tr>
-			<td>Customers</td>
-		</tr>
-		<tr>
-			<td>First Name</td>
-			<td>Last Name</td>
+			<th>First Name</th>
+			<th>Last Name</th>
 		</tr>
 <?php
-if(!($stmt = $mysqli->prepare(<!-- INSERT QUERY HERE!!! -->))){
+if(!($stmt = $mysqli->prepare("SELECT customerFirstName, customerLastName FROM customer where customerLastName like ? order by customerFirstName"))){
 	echo "Prepare failed. error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
-if(!($stmt->bind_param("i",$_POST['Homeworld']))){
+if(!($stmt->bind_param("s",$_POST['Customers']))){
 	echo "Bind failed. error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 
@@ -35,7 +41,7 @@ if(!$stmt->bind_result($firstName, $lastName)){
 	echo "Bind failed. error no. "  . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $name . "\n</td>\n<td>\n" . $lastName . "\n</td>\n</tr>";
+ echo "<tr>\n<td>\n" . $firstName . "\n</td>\n<td>\n" . $lastName . "\n</td>\n</tr>";
 }
 $stmt->close();
 ?>
