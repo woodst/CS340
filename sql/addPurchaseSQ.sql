@@ -20,9 +20,10 @@
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
 use CS340;
 
--- Copy line 23 to php
+-- Copy line 25 through 26 to php
 set @statement = '
-INSERT INTO sales (saleDescription, artworkID, customerID) VALUES (?,?,( select customerID from visitorLog where customerID = ? and sectionID = ? order by customerID limit 1) )
+INSERT INTO sales (saleDescription, artworkID, customerID ) 
+VALUES (?,?,(select customerID from visitorLog where customerID = ? and sectionID = (select artworkSectionID from artwork where artworkID = ? limit 1 )));
 ';
 
 -- test
@@ -30,19 +31,5 @@ prepare stmt from @statement;
 set @p1 = 'This is a sale'; -- sales description;
 set @p2 = 1;				-- artworkID	
 set @p3 = 1; 				-- customerID
-set @p4 = 4; 				-- sectiuonID
 
-execute stmt using @p1, @p2, @p3, @p4;
-
-/*
-	transactionID		int not null auto_increment primary key,
-    saleDescription		varchar(250),
-    artworkID			int,
-    customerID			int,
-	Foreign key fk_sale_artwork (artworkID) references artwork(artworkID)
-    on delete cascade
-    on update cascade,
-	Foreign key fk_sale_customer (customerID) references customer(customerID)
-    on delete cascade
-    on update cascade
-*/
+execute stmt using @p1, @p2, @p3, @p2;
