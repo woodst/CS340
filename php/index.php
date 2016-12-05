@@ -246,6 +246,33 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<div>
+	<form method="post" action="deleteGallery.php"> 
+
+		<fieldset>
+			<legend>Delete Gallery</legend>
+			<select value="delGallery">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName FROM gallery"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($galleryID, $galName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value="'. $galleryID . '"> ' . $galName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
 <br>
 <div>
 	<form method="post" action="addArtist.php"> 
@@ -259,6 +286,33 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<div>
+	<form method="post" action="deleteArtist.php"> 
+
+		<fieldset>
+			<legend>Delete Artist</legend>
+			<select value="delArtist">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT artistID, artistFirstName, artistLastName FROM artist"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($artistID, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $artistID . ' "> ' . $firstName . " " . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
 <br>
 <div>
 	<form method="post" action="addCustomer.php"> 
@@ -267,6 +321,33 @@ $stmt->close();
 			<legend>Add Customer</legend>
 			<p>First Name: <input type="text" name="custFName" /></p>
 			<p>Last Name: <input type="text" name="custLName" /></p>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<div>
+	<form method="post" action="deleteArtist.php"> 
+
+		<fieldset>
+			<legend>Delete Customer</legend>
+			<select value="delCustomer">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($id, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $id . ' "> ' . $firstName . " " . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
@@ -299,6 +380,33 @@ while($stmt->fetch()){
 $stmt->close();
 ?>
 			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<div>
+	<form method="post" action="deleteSection.php"> 
+
+		<fieldset>
+			<legend>Delete Section</legend>
+			<select value="delSection">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT sectionID, galleryName, sectionName FROM section JOIN gallery ON section.galleryID = gallery.galleryID"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($id, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $id . ' "> ' . $firstName . " " . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
@@ -358,6 +466,33 @@ $stmt->close();
 
 ?>
 			</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<div>
+	<form method="post" action="deleteArtwork.php"> 
+
+		<fieldset>
+			<legend>Delete Artwork</legend>
+			<select value="delArtwork">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT artworkID, artworkTitle, artistFirstName, artistLastName FROM artwork JOIN artist ON artwork.artworkArtistID = artist.artistID"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($id, $title, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $id . ' "> ' . $title . ", Painted by : " . $firstName . " " . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
