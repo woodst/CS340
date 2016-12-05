@@ -20,7 +20,7 @@ use CS340;
 
 -- Copy line 23 to php
 set @statement = '
-INSERT INTO sales (saleDescription, transactionType, artworkID, customerID, sectionID, amount) VALUES (?,?,?,?,?,?)
+INSERT INTO sales (saleDescription, artworkID, customerID, sectionID ) VALUES (?,?,?,?)
 ';
 
 -- test

@@ -49,7 +49,7 @@ create table section
 	sectionID 			int not null auto_increment primary key,
     sectionName 		varchar(50),
     galleryID			int not null,
-    Foreign key fk_section_gallery (galleryID) references section(sectionID)
+    Foreign key fk_section_gallery (galleryID) references gallery(galleryID)
     on delete cascade
     on update cascade
 ) engine = innodb;
@@ -66,6 +66,7 @@ create table artwork
     artworkSectionID		int,
 	artworkArtistID			int, 
     artworkPrice			int,
+    isSold					int,
 	Foreign key fk_artwork_section (artworkSectionID) references section(sectionID)
     on delete cascade
     on update cascade,

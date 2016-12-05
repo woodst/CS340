@@ -18,8 +18,8 @@ INSERT INTO customer (customerFirstName, customerLastName) VALUES (?,?)
 
 -- test
 prepare stmt from @statement;
-set @p1 = 'William';
-set @p2 = 'Gates';
+set @p1 = 'Jeremy';
+set @p2 = 'Renner';
 
 execute stmt using @p1, @p2;
 

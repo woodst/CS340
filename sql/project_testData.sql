@@ -11,7 +11,20 @@
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
 use CS340;
 
+-- empty the tables of everything
+SET SQL_SAFE_UPDATES = 0;
+	delete from gallery;
+	delete from customer;
+	delete from artist;
+    delete from artwork;
+    delete from section;
+    delete from sales;
+    delete from visitorLog;
+SET SQL_SAFE_UPDATES = 1;
+
 -- Add the artist and galleries first
+
+
 
 insert into artist
 values
@@ -81,31 +94,31 @@ values
 
 insert into artwork
 values
-(1,"The Ninth Wave",1850,1,1,  210000 ),					-- https://en.wikipedia.org/wiki/Ivan_Aivazovsky
-(2,"The Black Sea at Night",1879,2,1,250000),
-(3,"Bay of Naples",1842,1,1,500000 ),
-(4,"American Shipping off the Rock of Gibraltar ",1873,1,1,372000),
-(5,"Rainbow",1873,2,1, 126000 ),
-(6,"Ship 'Twelve Apostles' ",1878,3,1,241000),
-(7,"Tempest by Sounion",1856,3,1,198000 ),
-(8,"Seascape with a steamer",1886,5,1,315000),
-(9,"Romans during the Decadence ",1847,4,2,37400),		-- https://en.wikipedia.org/wiki/Thomas_Couture
-(10,"Anselm Feuerbach",1852,3,2,52000),
-(11,"Daydreams",1859,5,2,49150 ),
-(12,"A Lawyer Going to Court",1860,5,2, 61000),
-(13,"The Duel After the Masked Ball",1857,6,2,97000),
-(14,"Orpheus",1777,6,3,1700000), 						-- https://en.wikipedia.org/wiki/Antonio_Canova
-(15,"Washington",1777,7,3,982000),
-(16,"Psyche Revived by Cupid's Kiss",1777,8,3,1210000),
-(17,"Perseus with the Head of Medusa",1777,7,3,823000),
-(18,"The Three Graces",1777,9,3,1172500),
-(19,"Working Sketch of the Mastodon,",1801,9,4,3730),	-- https://en.wikipedia.org/wiki/Rembrandt_Peale
-(20,"Samuel Fisher Bradford",1803,8,4,64000),
-(21,"Painting of Thomas Jefferson ",1800,10,4,29500),
-(22,"Portrait of Henry Robinson",1806,10,4,112000),
-(23,"John Armstrong, Jr.",1808,10,4,97000),
-(24,"The Roman Daughter",1811,9,4,52900),
-(25,"William Henry Harrison ",1814,9,4,76000);
+(1,"The Ninth Wave",1850,1,1,  210000, 0),					-- https://en.wikipedia.org/wiki/Ivan_Aivazovsky
+(2,"The Black Sea at Night",1879,2,1,250000, 0),
+(3,"Bay of Naples",1842,1,1,500000, 0 ),
+(4,"American Shipping off the Rock of Gibraltar ",1873,1,1,372000, 0),
+(5,"Rainbow",1873,2,1, 126000, 0 ),
+(6,"Ship 'Twelve Apostles' ",1878,3,1,241000, 0),
+(7,"Tempest by Sounion",1856,3,1,198000 , 0),
+(8,"Seascape with a steamer",1886,5,1,315000, 0),
+(9,"Romans during the Decadence ",1847,4,2,37400, 0),		-- https://en.wikipedia.org/wiki/Thomas_Couture
+(10,"Anselm Feuerbach",1852,3,2,52000, 0),
+(11,"Daydreams",1859,5,2,49150, 0 ),
+(12,"A Lawyer Going to Court",1860,5,2, 61000, 0),
+(13,"The Duel After the Masked Ball",1857,6,2,97000, 0),
+(14,"Orpheus",1777,6,3,1700000, 0), 						-- https://en.wikipedia.org/wiki/Antonio_Canova
+(15,"Washington",1777,7,3,982000, 0),
+(16,"Psyche Revived by Cupid's Kiss",1777,8,3,1210000, 0),
+(17,"Perseus with the Head of Medusa",1777,7,3,823000, 0),
+(18,"The Three Graces",1777,9,3,1172500, 0),
+(19,"Working Sketch of the Mastodon,",1801,9,4,3730, 0),	-- https://en.wikipedia.org/wiki/Rembrandt_Peale
+(20,"Samuel Fisher Bradford",1803,8,4,64000, 0),
+(21,"Painting of Thomas Jefferson ",1800,10,4,29500, 0),
+(22,"Portrait of Henry Robinson",1806,10,4,112000, 0),
+(23,"John Armstrong, Jr.",1808,10,4,97000, 0),
+(24,"The Roman Daughter",1811,9,4,52900, 0),
+(25,"William Henry Harrison ",1814,9,4,76000, 0);
 
 
 insert into customer
@@ -143,13 +156,22 @@ values
 insert into sales
 values
 (1,"This is a sale",1,1),
-(2,"This is a sale",2,2),
-(3,"This is a sale",3,3),
-(4,"This is a sale",4,4),
+(2,"This is a sale",2,1),
+(3,"This is a sale",3,1),
+(4,"This is a sale",4,1),
 (5,"This is a sale",5,1),
 (6,"This is a sale",6,2),
-(7,"This is a sale",7,3),
-(8,"This is a sale",8,4),
-(9,"This is a sale",9,1);
+(7,"This is a sale",7,2),
+(8,"This is a sale",8,2),
+(9,"This is a sale",9,2),
+(10,"This is a sale",10,1),
+(11,"This is a sale",11,2),
+(12,"This is a sale",12,3),
+(13,"This is a sale",13,4),
+(14,"This is a sale",14,1),
+(15,"This is a sale",15,2),
+(16,"This is a sale",16,3),
+(17,"This is a sale",17,4),
+(18,"This is a sale",18,1);
 
 

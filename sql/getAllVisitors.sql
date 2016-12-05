@@ -5,23 +5,21 @@
 -- Joe Valencia
 -- Tom Woods
 -- ----------------------------------------------------------
--- getAllArtwork
+-- getAllVisitors
 -- ----------------------------------------------------------
-
+-- Gets all individual visits
 
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
 use CS340;
 
--- Copy line 21 to php
+-- Copy line 16 through 19 to php
 set @statement = '
-select ar.artworkID, ar.artworkTitle, ar.artworkYearCreated, g.galleryName, s.sectionName, a.artistFirstName, a.artistLastName, ar.artworkPrice, ar.isSold from artwork ar
-JOIN artist a ON ar.artworkArtistID = a.artistID
-JOIN section s ON ar.artworkSectionID = s.sectionID
-JOIN gallery g ON s.galleryID = g.galleryID
-ORDER BY g.galleryName, s.sectionName, ar.artworkTitle
+SELECT v.logID, c.customerFirstName, c.customerLastName, g.galleryName, s.sectionName FROM visitorLog v
+JOIN customer c ON v.customerID = c.customerID JOIN section s ON v.sectionID = s.sectionID JOIN gallery g ON s.galleryID = g.galleryID
+ORDER BY c.customerLastName
 ';
 
 -- test
+-- N/A
 prepare stmt from @statement;
-
-execute stmt
+execute stmt;

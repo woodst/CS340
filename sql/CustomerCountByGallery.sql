@@ -5,7 +5,7 @@
 -- Joe Valencia
 -- Tom Woods
 -- ----------------------------------------------------------
--- CustomerCount
+-- CustomerCountByGallery
 -- ----------------------------------------------------------
 
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
