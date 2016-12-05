@@ -554,7 +554,10 @@ $stmt->close();
 <div>
 	<form method="post" action="purchaseArt.php"> 
 	<legend>Purchase Artwork</legend>
-
+		<fieldset>
+		<legend>Sales Description</legend>
+		<p>Description: <input type="text" name="desc" /></p>
+		</fieldset>
 		<fieldset>
 			<legend>Customer</legend>
 			<select name="Customers">
@@ -579,9 +582,9 @@ $stmt->close();
 		</fieldset>
 				<fieldset>
 			<legend>Artwork</legend>
-			<select name="Sections">
+			<select name="Artwork">
 <?php
-/*
+
 if(!($stmt = $mysqli->prepare("SELECT artworkID, artworkTitle, artworkPrice, isSold FROM artwork"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -593,11 +596,11 @@ if(!$stmt->bind_result($artID, $artName, $price, $isSold)){
 	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
-	$available = $isSold ? 'Available' : 'Sold';
-	echo '<option value=" '. $artID . ' "> $' . $price . ', ' . $artname . ' ' .$available . '</option>\n';
+	$available = $isSold ? 'Sold' : 'Available';
+	echo '<option value=" '. $artID . ' "> ' . $artName . ', $' . $price  . ' ' .$available . '</option>\n';
 }
 $stmt->close();
-*/
+
 ?>
 			</select>
 		</fieldset>
