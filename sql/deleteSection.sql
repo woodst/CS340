@@ -5,20 +5,20 @@
 -- Joe Valencia
 -- Tom Woods
 -- ----------------------------------------------------------
--- deleteCustomer
+-- deleteSection
 -- ----------------------------------------------------------
--- Cascades to sales and visitorLog
+-- cascades to visitorLog, artwork, possibly sales and visitorlog
 
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
 use CS340;
 
--- Copy line 17 to php
+-- Copy line 16 to php
 set @statement = '
-DELETE from customer where customerID = ?
+DELETE from section where sectionID = ?
 ';
 
 -- test
 -- N/A
 prepare stmt from @statement;
-set @p1 = 1;
+set @p1 = 6;
 execute stmt using @p1;

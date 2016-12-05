@@ -134,3 +134,30 @@ create table visitorLog
 	
 -- restore the foreign key checks
 set FOREIGN_KEY_CHECKS = 1;
+
+-- Triggers
+-- Commented out because we don't have permissions to make them on anything we can reach
+-- from the class assignment.
+
+/*
+-- clear the sold flag for every new artwork
+CREATE TRIGGER set_sold_flag
+AFTER INSERT ON artwork FOR EACH ROW
+	update artwork
+		set isSold = 0
+	where artworkID = NEW.artworkID;
+
+-- set sold flag when a sale is made
+CREATE TRIGGER set_sold_flag
+AFTER INSERT ON sales FOR EACH ROW
+	update artwork
+		set isSold = 1
+	where artworkID = NEW.artworkID;
+
+-- clear the sold flag if a sale is deleted
+CREATE TRIGGER set_sold_flag
+AFTER DELETE ON sales FOR EACH ROW
+	update artwork
+		set isSold = 0
+	where artworkID = NEW.artworkID;
+*/

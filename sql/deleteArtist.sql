@@ -5,16 +5,17 @@
 -- Joe Valencia
 -- Tom Woods
 -- ----------------------------------------------------------
--- deleteCustomer
+-- deleteArtist
 -- ----------------------------------------------------------
--- Cascades to sales and visitorLog
+-- casades to artwork, sales
+-- 
 
 -- Reference for the Dev Database on AWS.  Comment out for deployment elswhere
 use CS340;
 
--- Copy line 17 to php
+-- Copy line 16 to php
 set @statement = '
-DELETE from customer where customerID = ?
+DELETE from artist where artistID = ?
 ';
 
 -- test

@@ -5,7 +5,7 @@
 -- Joe Valencia
 -- Tom Woods
 -- ----------------------------------------------------------
--- deleteCustomer
+-- deleteArtwork
 -- ----------------------------------------------------------
 -- Cascades to sales and visitorLog
 
@@ -14,11 +14,11 @@ use CS340;
 
 -- Copy line 17 to php
 set @statement = '
-DELETE from customer where customerID = ?
+DELETE from artwork where artworkID = ?
 ';
 
 -- test
 -- N/A
 prepare stmt from @statement;
-set @p1 = 1;
+set @p1 = 6;
 execute stmt using @p1;
