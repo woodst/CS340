@@ -446,6 +446,7 @@ $stmt->close();
 			<legend>Artwork</legend>
 			<select name="Sections">
 <?php
+/*
 if(!($stmt = $mysqli->prepare("SELECT artworkID, artworkTitle, artworkPrice, isSold FROM artwork"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
 }
@@ -461,13 +462,98 @@ while($stmt->fetch()){
 	echo '<option value=" '. $artID . ' "> $' . $price . ', ' . $artname . ' ' .$available . '</option>\n';
 }
 $stmt->close();
-
+*/
 ?>
 			</select>
 		</fieldset>
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<br>
+<div>
+	<form method="post" action="displayPurchaseList.php"> 
+		<fieldset>
+			<legend>Display List Of Purchases for Customer</legend>
+				<select name=purchList>
+<?php
+if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+				</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+<br>
+<div>
+	<form method="post" action="visitedSect.php"> 
+		<fieldset>
+			<legend>Display Sections Visited By Customer</legend>
+				<select name=visitedSections>
+<?php
+
+if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($custID, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $custID . ' "> ' . $firstName . ' ' . $lastName . '</option>\n';
+}
+$stmt->close();
+
+?>
+				</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
+</br>
+<div>
+	<form method="post" action="filterLName.php">
+		<fieldset>
+			<legend>Filter Customers By Last Name</legend>
+				<select name="Customers">
+					<?php
+					if(!($stmt = $mysqli->prepare("SELECT customerLastName FROM customer"))){
+						echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+					}
+
+					if(!$stmt->execute()){
+						echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					if(!$stmt->bind_result($lastName)){
+						echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+					}
+					while($stmt->fetch()){
+					 echo '<option value="'. $lastName . '"> ' . $lastName . '</option>\n';
+					}
+					$stmt->close();
+					?>
+				</select>
+		</fieldset>
+		<input type="submit" value="Run Filter" />
+	</form>
+</div>
+
+
 
 </body>
 </html>
