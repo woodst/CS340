@@ -5,15 +5,15 @@ if($mysqli->connect_errno){
 	echo "Connection Error no. " . $mysqli->connect_errno . ", " . $mysqli->connect_error;
 	}
 	
-if(!($stmt = $mysqli->prepare("DELETE from gallery where galleryID = ?"))){
+if(!($stmt = $mysqli->prepare("DELETE from artist where artistID = ?"))){
 	echo "Prepare failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
-if(!($stmt->bind_param("i",$_POST['delGallery']))){
+if(!($stmt->bind_param("i",$_POST['delArtist']))){
 	echo "Bind failed. Error no. "  . $stmt->errno . ", " . $stmt->error;
 }
 if(!$stmt->execute()){
 	echo "Execute failed. Error no. "  . $stmt->errno . " " . $stmt->error;
 } else {
-	echo "Deleted " . $stmt->affected_rows . " rows from gallery";
+	echo "Deleted " . $stmt->affected_rows . " rows from artist";
 }
 ?>

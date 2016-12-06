@@ -251,7 +251,7 @@ $stmt->close();
 
 		<fieldset>
 			<legend>Delete Gallery</legend>
-			<select value="delGallery">
+			<select name="delGallery">
 <?php
 if(!($stmt = $mysqli->prepare("SELECT galleryID, galleryName FROM gallery"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
@@ -264,7 +264,7 @@ if(!$stmt->bind_result($galleryID, $galName)){
 	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 while($stmt->fetch()){
-	echo '<option value="'. $galleryID . '"> ' . $galName . '</option>\n';
+	echo '<option value='. $galleryID . '> ' . $galName . '</option>\n';
 }
 $stmt->close();
 ?>
@@ -291,7 +291,7 @@ $stmt->close();
 
 		<fieldset>
 			<legend>Delete Artist</legend>
-			<select value="delArtist">
+			<select name="delArtist">
 <?php
 if(!($stmt = $mysqli->prepare("SELECT artistID, artistFirstName, artistLastName FROM artist"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
@@ -326,11 +326,11 @@ $stmt->close();
 	</form>
 </div>
 <div>
-	<form method="post" action="deleteArtist.php"> 
+	<form method="post" action="deleteCustomer.php"> 
 
 		<fieldset>
 			<legend>Delete Customer</legend>
-			<select value="delCustomer">
+			<select name="delCustomer">
 <?php
 if(!($stmt = $mysqli->prepare("SELECT customerID, customerFirstName, customerLastName FROM customer"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
@@ -389,7 +389,7 @@ $stmt->close();
 
 		<fieldset>
 			<legend>Delete Section</legend>
-			<select value="delSection">
+			<select name="delSection">
 <?php
 if(!($stmt = $mysqli->prepare("SELECT sectionID, galleryName, sectionName FROM section JOIN gallery ON section.galleryID = gallery.galleryID"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
@@ -475,7 +475,7 @@ $stmt->close();
 
 		<fieldset>
 			<legend>Delete Artwork</legend>
-			<select value="delArtwork">
+			<select name="delArtwork">
 <?php
 if(!($stmt = $mysqli->prepare("SELECT artworkID, artworkTitle, artistFirstName, artistLastName FROM artwork JOIN artist ON artwork.artworkArtistID = artist.artistID"))){
 	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
