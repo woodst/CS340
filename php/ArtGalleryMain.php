@@ -337,7 +337,7 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
-<div>
+
 -->
 <div>
 	<form method="post" action="visitSection.php"> 
