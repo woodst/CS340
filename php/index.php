@@ -607,6 +607,33 @@ $stmt->close();
 		<p><input type="submit" /></p>
 	</form>
 </div>
+<div>
+	<form method="post" action="deleteSale.php"> 
+
+		<fieldset>
+			<legend>Delete Sale</legend>
+			<select name="delSale">
+<?php
+if(!($stmt = $mysqli->prepare("SELECT transactionID, artworkTitle, customerFirstName, customerLastName FROM sales JOIN artwork ON artwork.artworkID = sales.artworkID JOIN customer ON customer.customerID = sales.customerID"))){
+	echo "Prepare failed: "  . $stmt->errno . " " . $stmt->error;
+}
+
+if(!$stmt->execute()){
+	echo "Execute failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+if(!$stmt->bind_result($id, $title, $firstName, $lastName)){
+	echo "Bind failed: "  . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+while($stmt->fetch()){
+	echo '<option value=" '. $id . ' "> ' . $title . ", Purchased by : " . $firstName . " " . $lastName . '</option>\n';
+}
+$stmt->close();
+?>
+		</select>
+		</fieldset>
+		<p><input type="submit" /></p>
+	</form>
+</div>
 <br>
 <div>
 	<form method="post" action="displayPurchaseList.php"> 
