@@ -417,8 +417,8 @@ $stmt->close();
 		<legend>Add Artwork</legend>
 		<fieldset>
 			<legend>Artwork Info </legend>
-			<p>Art Name: <input type="text" name="artName" /></p>
-			<p>Year CreateD:<input type="number" name="yearCreated" /></p>
+			<p>Artwork Title: <input type="text" name="artName" /></p>
+			<p>Year Created:<input type="number" name="yearCreated" /></p>
 			<p>Price: $<input type="number" name="price" /></p>
 		</fieldset>
 		<fieldset>
